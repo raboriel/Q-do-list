@@ -1,30 +1,56 @@
-const express = require('express')
-const methodOverride = require('method-override')
+// USE DOTENV TO IMPORT
+require('dotenv').config();
+
+//Dependencies
+const express = require('express');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose')
-require('dotenv').config()
-const app = express()
+const app = express();
+const session = require('express-session')
+
+
 // Configuration
-const PORT = process.env.PORT
-const mongoURI = process.env.MONGODB_URI
-// Database
-mongoose.connect(mongoURI, { useNewUrlParser: true })
+const PORT = process.env.PORT;
+const mongoURI = process.env.MONGODB_URI;
+
+
+//___________________
+//Middleware
+//___________________
+app.use( express.static ( 'public' ) );
+app.use(methodOverride('_method'));
+// parses info
+app.use(express.urlencoded({extended: false}));
+// configure sessions
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
+
+
+// DAtabase config and connection
+mongoose.connect(mongoURI, { useNewUrlParser: true})
 mongoose.connection.once('open', () => {
   console.log('connected to mongo')
-})
+});
 
-// Middleware
-// allows us to use put and delete methods
-app.use(methodOverride('_method'))
-// parses info from our input fields into an object
-app.use(express.urlencoded({ extended: false }))
-
+// Listen
+app.listen(PORT, ()=> console.log('auth happening on port'),( PORT))
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('index route')
+  // res.send('index route')
+  res.render('index.ejs', {
+    currentUser: req.session.currentUser
+  })
 })
 
 
+// users controller
+const userController = require('./controllers/users_controller.js')
+app.use('/users', userController)
 
-// Listen
-app.listen(PORT, () => console.log('auth happening on port', PORT))
+// sessions controller
+const sessionsController = require('./controllers/sessions_controller.js')
+app.use('/sessions', sessionsController)

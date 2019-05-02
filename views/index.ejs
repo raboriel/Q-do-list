@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <% include ./partials/head.ejs %>
+  </head>
+  <body>
+      <div class="container">
+        <h1>Q Do List</h1>
+        <div class="context">
+          <% ntUser) { %>
+            Welcome <%=currentUser.username%>!
+              <a class="waves-effect waves-light btn" href="/app">Join the Party</a>
+              <form action="/sessions?_method=DELETE" method="POST">
+                <input type="submit" value="Logout" class="waves-effect waves-light btn"/>
+              </form>
+            <% } else { %>
+              <a class="waves-effect waves-light btn" href="/users/new">Sign Up</a></h2>
+              <a class="waves-effect waves-light btn" href="/sessions/new">Log In</a>
+            <% } %>
+        </div>
+        </div>
+     <div class="area" >
+                 <ul class="circles">
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                         <li></li>
+                 </ul>
+         </div >
+
+  </body>
+</html>
