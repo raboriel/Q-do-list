@@ -7,9 +7,12 @@ body{
     font-family: 'Exo', sans-serif;
 }
 
-
-
-
+.thingslist {
+  font-size: 30px;
+}
+.donecheckbox {
+  display: none;
+}
 .context {
     width: 40%;
     height: 30%;
@@ -31,6 +34,13 @@ h1{
     color: white;
     font-size: 50px;
 }
+
+.logout{
+  font-size: .7em;
+  padding: 2px;
+}
+
+
 
 
 .area{

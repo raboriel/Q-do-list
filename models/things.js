@@ -1,23 +1,11 @@
-//___________________
-//Dependencies
-//___________________
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-//___________________
-//Set up Schema
-//___________________
-const thingsSchema = new Schema ({
-  Thing : String,
-  checked: false
-});
+const thingsSchema = Schema({
+  doing : String,
+  done : {type: Boolean, default: false}
+})
 
-//___________________
-//Set up Model
-//___________________
-const Things = mongoose.model('Things', thingsSchema);
+const Things = mongoose.model('Things', thingsSchema)
 
-//___________________
-////Module Exports
-//___________________
-module.exports = Things;
+module.exports = Things

@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const app = express();
 const session = require('express-session')
 const User = require('./models/users')
+const Things = require('./models/things')
 
 // Configuration
 const PORT = process.env.PORT;
@@ -27,6 +28,8 @@ app.use(session({
 
 
 // DAtabase config and connection
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 mongoose.connect(mongoURI, { useNewUrlParser: true})
 mongoose.connection.once('open', () => {
   console.log('connected to mongo')
@@ -47,27 +50,31 @@ app.get('/', (req, res) => {
 })
 
 app.get('/main', (req, res) => {
-  User.findOne({_id: req.session.currentUser._id}, (err, createdProduct) => {
+  Things.findOne({userid: req.session.currentUser.id}, (err, edituser) => {
   res.render('main.ejs', {
-    currentUser: createdProduct
+      currentUser: req.session.currentUser
   })
+  console.log(edituser);
 })
 })
 
-app.get('/session_test', (req, res) =>{
-  res.send(req.session)
-})
+
+
 
 // ============================
 // ACTION ROUTES
 // ============================
 // -- Add todo Things in User's thing array
-app.post('/main', (req, res) => {
-  User.findOneAndUpdate({_id: req.session.currentUser._id}, {$push: { things:req.body.thing}}, (err, createdProduct) => {
-    let user = req.session.currentUser
-    res.redirect('/main')
-    })
-  })
+app.post('/main', (req, res)=>{
+    let currentuser= req.session.currentUser
+    User.findById(currentuser.id, (err, foundUser)=>{
+        Things.create(req.body, (err, createdThings)=>{
+          currentuser.things.push(createdThings);
+          console.log(currentuser);
+          res.redirect('/main');
+        });
+    });
+});
 
 
 
