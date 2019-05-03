@@ -13,10 +13,7 @@ const session = require('express-session')
 const PORT = process.env.PORT;
 const mongoURI = process.env.MONGODB_URI;
 
-
-//___________________
-//Middleware
-//___________________
+// Middleware
 app.use( express.static ( 'public' ) );
 app.use(methodOverride('_method'));
 // parses info
@@ -46,7 +43,15 @@ app.get('/', (req, res) => {
   })
 })
 
+app.get('/main', (req, res)=>{
+  res.render('main.ejs', {
+    currentUser: req.session.currentUser
+  })
+})
 
+
+const thingsController = require('./controllers/things');
+app.use('/things', thingsController);
 // users controller
 const userController = require('./controllers/users_controller.js')
 app.use('/users', userController)
