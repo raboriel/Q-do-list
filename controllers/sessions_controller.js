@@ -11,8 +11,8 @@ sessions.get('/new', (req, res) => {
 sessions.post('/', (req, res) => {
     User.findOne({ username: req.body.username }, (err, foundUser) => {
       if( bcrypt.compareSync(req.body.password, foundUser.password) ){
-          req.session.currentUser = foundUser;
-            res.redirect('/main');
+            req.session.currentUser = foundUser;
+            res.redirect('/main')
         } else {
             res.send('<a href="/">wrong password</a>');
         }

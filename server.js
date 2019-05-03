@@ -7,7 +7,7 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose')
 const app = express();
 const session = require('express-session')
-
+const User = require('./models/users')
 
 // Configuration
 const PORT = process.env.PORT;
@@ -35,7 +35,10 @@ mongoose.connection.once('open', () => {
 // Listen
 app.listen(PORT, ()=> console.log('auth happening on port'),( PORT))
 
-// Routes
+// ============================
+// GET ROUTES
+// ============================
+// -- index route
 app.get('/', (req, res) => {
   // res.send('index route')
   res.render('index.ejs', {
@@ -43,15 +46,31 @@ app.get('/', (req, res) => {
   })
 })
 
-app.get('/main', (req, res)=>{
+app.get('/main', (req, res) => {
+  User.findOne({_id: req.session.currentUser._id}, (err, createdProduct) => {
   res.render('main.ejs', {
-    currentUser: req.session.currentUser
+    currentUser: createdProduct
   })
 })
+})
+
+app.get('/session_test', (req, res) =>{
+  res.send(req.session)
+})
+
+// ============================
+// ACTION ROUTES
+// ============================
+// -- Add todo Things in User's thing array
+app.post('/main', (req, res) => {
+  User.findOneAndUpdate({_id: req.session.currentUser._id}, {$push: { things:req.body.thing}}, (err, createdProduct) => {
+    let user = req.session.currentUser
+    res.redirect('/main')
+    })
+  })
 
 
-const thingsController = require('./controllers/things');
-app.use('/things', thingsController);
+
 // users controller
 const userController = require('./controllers/users_controller.js')
 app.use('/users', userController)

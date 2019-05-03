@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 //Set up Schema
 //___________________
 const thingsSchema = new Schema ({
-  Things : String,
+  Thing : String,
   checked: false
 });
 
