@@ -50,11 +50,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/main', (req, res) => {
-  Things.findOne({userid: req.session.currentUser.id}, (err, edituser) => {
+  User.findOne({_id: req.session.currentUser._id}, (err, edituser) => {
   res.render('main.ejs', {
-      currentUser: req.session.currentUser
+      currentUser: edituser
   })
-  console.log(edituser);
 })
 })
 
@@ -66,15 +65,23 @@ app.get('/main', (req, res) => {
 // ============================
 // -- Add todo Things in User's thing array
 app.post('/main', (req, res)=>{
-    let currentuser= req.session.currentUser
-    User.findById(currentuser.id, (err, foundUser)=>{
-        Things.create(req.body, (err, createdThings)=>{
-          currentuser.things.push(createdThings);
-          console.log(currentuser);
-          res.redirect('/main');
+    Things.create(req.body, (err, createdThings)=>{
+      User.findOneAndUpdate({_id: req.session.currentUser._id}, {$push: {things: createdThings}}, (err, data) =>{
+        res.redirect('/main');
         });
     });
 });
+
+app.delete('/main/:id', (req, res) => {
+    User.update({ things: res.params.id }, {$pull:{things: res.params.id}})
+
+    me.save(function(err,us){
+      res.redirect('/main');
+});
+});
+
+
+
 
 
 

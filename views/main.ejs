@@ -17,26 +17,25 @@
                     <div class="input-field col s12">
                       <input type="text" class="materialize-textarea" name="doing"/>
                       <label for="textarea1">Things to Do</label>
-                    <input type="submit" value="ADD" class="waves-effect waves-light btn"/>
+                      <button class="btn waves-effect waves-light" type="submit">ADD
+                      </button>
                   </form>
                 </div>
               </div>
               <% for(let i = 0; i < currentUser.things.length; i++) { %>
-                <label>
-                <input type="checkbox" id="thingbox" />
-                <span><%=currentUser.things[i].doing%></span><br/>
-                </label>
-              <%} %>
-
-
-
-
+                <form action="/main/<%=currentUser.things[i]._id%>?_method=DELETE" method="POST">
+                  <label>
+                    <button type="submit" id="thingbox" class="waves-effect waves-light btn">
+                      <%=currentUser.things[i].doing%>
+                    </button>
+                  </label>
+                </form><br/>
+                <%} %>
 
             <% } else { %>
               <a class="waves-effect waves-light btn" href="/users/new">Sign Up</a>
               <a class="waves-effect waves-light btn" href="/sessions/new">Log In</a>
             <% } %>
         </div>
-
   </body>
 </html>

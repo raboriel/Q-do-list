@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+
+
 const thingsSchema = Schema({
   doing : String,
   done : {type: Boolean, default: false}
