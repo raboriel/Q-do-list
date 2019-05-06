@@ -3,9 +3,9 @@ const Schema = mongoose.Schema
 
 
 
-const thingsSchema = Schema({
+const thingsSchema = new Schema({
   doing : String,
-  done : {type: Boolean, default: false}
+  idForUser : String
 })
 
 const Things = mongoose.model('Things', thingsSchema)

@@ -29,7 +29,6 @@ app.use(session({
 
 // DAtabase config and connection
 mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
 mongoose.connect(mongoURI, { useNewUrlParser: true})
 mongoose.connection.once('open', () => {
   console.log('connected to mongo')
@@ -50,40 +49,68 @@ app.get('/', (req, res) => {
 })
 
 app.get('/main', (req, res) => {
-  User.findOne({_id: req.session.currentUser._id}, (err, edituser) => {
-  res.render('main.ejs', {
-      currentUser: edituser
+  User.findOne({_id: req.session.currentUser._id}, (err, user) => {
+    Things.find({idForUser: req.session.currentUser._id}, (err, things) => {
+      console.log(things);
+      res.render('main.ejs', {
+        currentUser: user,
+        thingz: things
+
   })
 })
 })
-
+});
 
 
 
 // ============================
 // ACTION ROUTES
 // ============================
-// -- Add todo Things in User's thing array
+// -- Create Things
 app.post('/main', (req, res)=>{
+  //add user ID into things
+  req.body.idForUser = req.session.currentUser._id
     Things.create(req.body, (err, createdThings)=>{
-      User.findOneAndUpdate({_id: req.session.currentUser._id}, {$push: {things: createdThings}}, (err, data) =>{
+      console.log(createdThings);
         res.redirect('/main');
+      });
+  });
+
+app.delete('/main/:id', (req, res)=>{
+    Things.findOneAndRemove({_id: req.params.id}, (err, foundArticle)=>{
+      res.redirect( '/main' );
         });
     });
-});
-
-app.delete('/main/:id', (req, res) => {
-    User.update({ things: res.params.id }, {$pull:{things: res.params.id}})
-
-    me.save(function(err,us){
-      res.redirect('/main');
-});
-});
 
 
+// app.delete ('/main/:id' , ( req , res ) => {
+//     // Things.findOneAndRemove({_id: req.params.id}, (error, things) => {
+//       User.findOneAndUpdate({_id: req.session.currentUser._id}, { $pull: { todo: { id_: req.params.id } } },  (error, person) =>{
+//         console.log(person);
+//         res.redirect ( '/main' );
+//       });
+// });
+
+// app.delete ('/main/:id' , ( req , res ) => {
+//   User.findOneAndUpdate({_id: req.session.currentUser._id}, { pull: { todo: { _id: req.params.id } } } );
+//   res.redirect ( '/main' );
+// });
 
 
-
+// db.survey.update(
+//   { },
+//   { $pull: { results: { score: 8 , item: "B" } } },
+//   { multi: true }
+// )
+//
+// { },
+//  { $pull: { results: { $elemMatch: { score: 8 , item: "B" } } } },
+//  { multi: true }
+// )
+//
+// "results" : [
+//     { "item" : "C", "score" : 8, "comment" : "Strongly agree" },
+//     { "item" : "B", "score" : 4 }
 
 // users controller
 const userController = require('./controllers/users_controller.js')

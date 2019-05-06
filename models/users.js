@@ -3,10 +3,9 @@ const Schema = mongoose.Schema
 
 
 
-const userSchema = Schema({
+const userSchema = new Schema({
   username: String,
   password: String,
-  things: [Object]
 })
 
 const User = mongoose.model('User', userSchema)
