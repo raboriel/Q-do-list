@@ -37,30 +37,31 @@ mongoose.connection.once('open', () => {
 // Listen
 app.listen(PORT, ()=> console.log('auth happening on port'),( PORT))
 
+
 // ============================
 // GET ROUTES
 // ============================
 // -- index route
 app.get('/', (req, res) => {
-  // res.send('index route')
+  // index
   res.render('index.ejs', {
     currentUser: req.session.currentUser
   })
 })
-
+// main
 app.get('/main', (req, res) => {
+  // finding current user
   User.findOne({_id: req.session.currentUser._id}, (err, user) => {
+    // add current user id in things
     Things.find({idForUser: req.session.currentUser._id}, (err, things) => {
       console.log(things);
       res.render('main.ejs', {
         currentUser: user,
         thingz: things
-
+      })
+    })
   })
-})
-})
 });
-
 
 
 // ============================
@@ -75,42 +76,13 @@ app.post('/main', (req, res)=>{
         res.redirect('/main');
       });
   });
-
+  // delete things
 app.delete('/main/:id', (req, res)=>{
     Things.findOneAndRemove({_id: req.params.id}, (err, foundArticle)=>{
       res.redirect( '/main' );
         });
     });
 
-
-// app.delete ('/main/:id' , ( req , res ) => {
-//     // Things.findOneAndRemove({_id: req.params.id}, (error, things) => {
-//       User.findOneAndUpdate({_id: req.session.currentUser._id}, { $pull: { todo: { id_: req.params.id } } },  (error, person) =>{
-//         console.log(person);
-//         res.redirect ( '/main' );
-//       });
-// });
-
-// app.delete ('/main/:id' , ( req , res ) => {
-//   User.findOneAndUpdate({_id: req.session.currentUser._id}, { pull: { todo: { _id: req.params.id } } } );
-//   res.redirect ( '/main' );
-// });
-
-
-// db.survey.update(
-//   { },
-//   { $pull: { results: { score: 8 , item: "B" } } },
-//   { multi: true }
-// )
-//
-// { },
-//  { $pull: { results: { $elemMatch: { score: 8 , item: "B" } } } },
-//  { multi: true }
-// )
-//
-// "results" : [
-//     { "item" : "C", "score" : 8, "comment" : "Strongly agree" },
-//     { "item" : "B", "score" : 4 }
 
 // users controller
 const userController = require('./controllers/users_controller.js')

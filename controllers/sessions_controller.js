@@ -8,6 +8,7 @@ sessions.get('/new', (req, res) => {
     res.render('sessions/new.ejs')
 })
 
+// login user
 sessions.post('/', (req, res) => {
     User.findOne({ username: req.body.username }, (err, foundUser) => {
       if( bcrypt.compareSync(req.body.password, foundUser.password) ){

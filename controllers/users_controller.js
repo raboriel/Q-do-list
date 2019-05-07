@@ -7,6 +7,7 @@ user.get('/new', (req, res) => {
   res.render('users/new.ejs')
 })
 
+//sign up user
 user.post('/', (req, res) => {
   req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
   User.create(req.body, (err, createdUser) => {

@@ -4,45 +4,62 @@
     <% include ./partials/head.ejs %>
   </head>
   <body>
-      <div class="header"></div>
+    <div class="header"></div>
       <div class="container">
         <header>
-        <div class="header">
-        <h5>Q Do List</h5>
-        </div>
+          <div class="header">
+          <h5>Q Do List</h5>
+          </div>
         </header>
-            <div class="spacearea"></div>
+          <div class="spacearea"></div>
             <% if(currentUser){ %>
               <div class="userstatus">
                 <form action="/sessions?_method=DELETE" method="POST">
                   welcome <%=currentUser.username%>
-                    <input type="submit" value="Log out" class="logout"/>
+                  <input type="submit" value="Log out" class="logout"/>
                 </form>
               </div>
-                <div class="row">
-                  <form action="/main" class="col s12" method="post">
-                    <div class="input-field col s12">
-                      <input type="text" class="materialize-textarea" name="doing"/>
-                      <label for="textarea1">Things to Do</label>
-                      <button class="btn waves-effect waves-light btn-large" type="submit">ADD Things
-                      </button>
-                  </form>
-                </div>
+              <div class="row">
+                <form action="/main" class="col s12" method="post">
+                  <div class="input-field col s12">
+                    <input type="text" class="materialize-textarea" name="doing"/>
+                    <label for="textarea1">Things to Do</label>
+                    <button class="btn waves-effect waves-light btn-large" type="submit">ADD Things
+                    </button>
+                  </div>
+                </form>
               </div>
               <% for(let i = 0; i < thingz.length; i++) { %>
-                <form action="/main/<%=thingz[i]._id%>?_method=DELETE" method="POST">
-                  <label>
-                   <input type="checkbox" class="thingscheck" />
-                     <span><input type="submit" value="<%=thingz[i].doing%>" class="thingz" ></span>
-                  </label>
-                </form><br/>
+                  <form action="/main/<%=thingz[i]._id%>?_method=DELETE" method="POST">
+                    <label>
+                       <input type="checkbox" class="thingscheck"/>
+                       <span><input type="submit" value="<%=thingz[i].doing%>" class="thingz" disabled/></span>
+                    </label>
+                  </form><br/>
                 <%} %>
-
-            <% } else { %>
-              <a class="waves-effect waves-light btn" href="/users/new">Sign Up</a>
-              <a class="waves-effect waves-light btn" href="/sessions/new">Log In</a>
-            <% } %>
-        </div>
-        <div class="footer"></div>
+              <% } else { %>
+                <a class="waves-effect waves-light btn" href="/users/new">Sign Up</a>
+                <a class="waves-effect waves-light btn" href="/sessions/new">Log In</a>
+              <% } %>
+          </div>
+      <div class="footer"></div>
+         <!-- Optional JavaScript -->
+         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+         <script>
+            $('.thingscheck').on("click", function (element) {
+              if($(this).is(':checked')){
+                $(this).next().children().removeAttr('disabled');
+              } else {
+                $(this).next().children().attr('disabled', 'disabled');
+              }
+               var data = $(this).data("id");
+               $.ajax({
+                 type: "POST",
+                 url: "https://qdolist.herokuapp.com/",
+                 data: { todoId: data },
+                 success: 'Ok'
+                })
+              })
+        </script>
   </body>
 </html>
