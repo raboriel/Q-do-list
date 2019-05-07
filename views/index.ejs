@@ -5,17 +5,14 @@
   </head>
   <body>
       <div class="container">
-        <h1>Q Do List</h1>
         <div class="context">
           <% if(currentUser){ %>
-            Welcome <%=currentUser.username%>!<br/>
-            <form action="/sessions?_method=DELETE" method="POST">
-              <input type="submit" value="Logout"/>
-            </form>
-              <a class="waves-effect waves-light btn" href="/main">Q Do List</a><br/>
+            Welcome <%=currentUser.username%>!<br/><br/>
+            <a class="waves-effect waves-light btn" href="/main">Q Do List</a>
 
             <% } else { %>
-              <a class="waves-effect waves-light btn" href="/users/new">Sign Up</a>
+              <h6>Welcome to Q Do List! Register and log in to add your list.</h6><br/>
+              <a class="waves-effect waves-light btn" href="/users/new">Sign Up</a>&nbsp or &nbsp
               <a class="waves-effect waves-light btn" href="/sessions/new">Log In</a>
             <% } %>
         </div>

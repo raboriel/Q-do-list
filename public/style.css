@@ -3,8 +3,20 @@
     padding: 0px;
 }
 
+
 body{
     font-family: 'Exo', sans-serif;
+}
+.container {
+  background-color: white;
+  padding: 0 30px 0 30px;
+}
+.container1 {
+  padding: 30px;
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 600px;
+  position: absolute;
+  margin: 0 auto;
 }
 
 .thingslist {
@@ -15,50 +27,64 @@ body{
 }
 .context {
     width: 40%;
-    height: 30%;
+    height: 25%;
     position: absolute;
     margin: auto;
     top: 0; left: 0; bottom: 0; right: 0;
-    background: white;
+    background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
     border-radius: 10px;
     padding: 3%;
-
 }
+
+.userstatus{
+text-align: right
+}
+
 h5{
-  font-family: 'Nunito Sans', sans-serif;
-  font-weight: 800;
+  font-family: 'Mali', cursive;
   color: white;
   display: inline;
 }
 
-h1{
-    font-family: 'Nunito Sans', sans-serif;
-    position: absolute;
-    margin: auto;
-    top: 0; left: 0; bottom: 0; right: 0;
-    text-align: center;
-    color: white;
-    font-size: 50px;
+h6{
+    margin-bottom: 20px;
 }
 
 
 .thingz{
   background-color: white;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 1.5em;
+  font-family: 'Exo', sans-serif;
+  font-size: 1.4em;
   border: 0;
   cursor: pointer;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
-.header{
-  background: #4e54c8;
-  width: 100%;
-  height: 50px;
-  margin-top: 0;
-  float: top;
+.spacearea{
+  height: 60px;
+  display: block;
+
+
 }
+
+
+.header{
+  background: #2fa59a;
+  width: 100%;
+  height: 60px;
+  padding: 14px;
+  position: absolute;
+}
+
+.footer{
+  background: #2fa59a;
+  width: 100%;
+  height: 30px;
+  bottom: 0;
+  position: absolute;
+}
+
 
 .logout{
   font-size: .7em;
@@ -69,7 +95,9 @@ h1{
 
 
 .area{
-    background: #4e54c8;
+    background: url("qdolistback.jpg");
+    background-position: center;
+    background-size: cover;
     background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
     width: 100%;
     height:100vh;
