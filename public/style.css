@@ -3,7 +3,6 @@
     padding: 0px;
 }
 
-
 body{
     font-family: 'Exo', sans-serif;
 }
@@ -22,9 +21,7 @@ body{
 .thingslist {
   font-size: 30px;
 }
-.donecheckbox {
-  display: none;
-}
+
 .context {
     width: 40%;
     height: 25%;
@@ -51,7 +48,6 @@ h6{
     margin-bottom: 20px;
 }
 
-
 .thingz{
   background-color: white;
   font-family: 'Exo', sans-serif;
@@ -64,10 +60,7 @@ h6{
 .spacearea{
   height: 60px;
   display: block;
-
-
 }
-
 
 .header{
   background: #2fa59a;
@@ -83,8 +76,10 @@ h6{
   height: 30px;
   bottom: 0;
   position: absolute;
+  text-align: center;
+  color: white;
+  padding: 4px;
 }
-
 
 .logout{
   font-size: .7em;
