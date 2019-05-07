@@ -1,4 +1,4 @@
 # Q do List 
 
-live website:
+Live website:
 https://qdolist.herokuapp.com
