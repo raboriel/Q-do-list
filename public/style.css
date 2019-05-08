@@ -9,7 +9,10 @@ body{
 .container {
   background-color: white;
   padding: 0 30px 0 30px;
+  min-height: 94vh;
+  padding-bottom: 30px;
 }
+
 .container1 {
   padding: 30px;
   top: 0; left: 0; bottom: 0; right: 0;
@@ -17,6 +20,7 @@ body{
   position: absolute;
   margin: 0 auto;
 }
+
 
 .thingslist {
   font-size: 30px;
@@ -35,7 +39,12 @@ body{
 }
 
 .userstatus{
-text-align: right
+  text-align: right;
+}
+
+.toplink{
+  float: left;
+  display: inline-block;
 }
 
 h5{
@@ -46,6 +55,13 @@ h5{
 
 h6{
     margin-bottom: 20px;
+}
+
+.notdoing {
+  color: #c75f41;
+  text-transform: capitalize;
+  font-size: 1.8em;
+  display: inline;
 }
 
 .thingz{
@@ -66,7 +82,7 @@ h6{
   background: #2fa59a;
   width: 100%;
   height: 60px;
-  padding: 14px;
+  padding: 14px 0;
   position: absolute;
 }
 
@@ -75,7 +91,6 @@ h6{
   width: 100%;
   height: 30px;
   bottom: 0;
-  position: absolute;
   text-align: center;
   color: white;
   padding: 4px;
@@ -84,6 +99,12 @@ h6{
 .logout{
   font-size: .7em;
   padding: 2px;
+}
+
+.nobutton {
+  border: none;
+  color: #c75f41;
+  cursor: pointer;
 }
 
 /*  Animation setting for index page */

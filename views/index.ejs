@@ -4,11 +4,12 @@
     <% include ./partials/head.ejs %>
   </head>
   <body>
-      <div class="container">
+      <div class="indexcontainer">
         <div class="context">
           <% if(currentUser){ %>
             Welcome <%=currentUser.username%>!<br/><br/>
-            <a class="waves-effect waves-light btn" href="/main">Q Do List</a>
+            <a class="waves-effect waves-light btn" href="/main">To Do List</a>
+            <a class="waves-effect waves-light btn" href="/main">Not To Do List</a>
 
             <% } else { %>
               <h6>Welcome to Q Do List! Register and log in to add your list.</h6><br/>

@@ -9,7 +9,7 @@ const app = express();
 const session = require('express-session')
 const User = require('./models/users')
 const Things = require('./models/things')
-
+const Nothings = require('./models/nothings')
 // Configuration
 const PORT = process.env.PORT;
 const mongoURI = process.env.MONGODB_URI;
@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
     currentUser: req.session.currentUser
   })
 })
-// main
+// main for to do list
 app.get('/main', (req, res) => {
   // finding current user
   User.findOne({_id: req.session.currentUser._id}, (err, user) => {
@@ -61,6 +61,33 @@ app.get('/main', (req, res) => {
       })
     })
   })
+});
+
+// for not to do list
+app.get('/nomain', (req, res) => {
+  // finding current user
+  User.findOne({_id: req.session.currentUser._id}, (err, user) => {
+    // add current user id in things
+    Nothings.find({idForUser: req.session.currentUser._id}, (err, nothings) => {
+      res.render('nomain.ejs', {
+        currentUser: user,
+        nothings: nothings
+      })
+    })
+  })
+});
+
+// edit nothings
+app.get ( '/nomain/:id/edit' , ( req , res ) => {
+  User.findOne({_id: req.session.currentUser._id}, (err, user) => {
+    Nothings.findById( req.params.id , ( err , nothings ) => {
+      if ( err ) { console.log ( err ); }
+        res.render ( './edit.ejs' , {
+          currentUser: user,
+          nothings : nothings
+      });
+    })
+  });
 });
 
 
@@ -76,12 +103,39 @@ app.post('/main', (req, res)=>{
         res.redirect('/main');
       });
   });
-  // delete things
+
+app.post('/nomain', (req, res)=>{
+  //add user ID into things
+  req.body.idForUser = req.session.currentUser._id
+    Nothings.create(req.body, (err, createdThings)=>{
+      console.log(createdThings);
+        res.redirect('/nomain');
+      });
+  });
+
+  // delete to do
 app.delete('/main/:id', (req, res)=>{
     Things.findOneAndRemove({_id: req.params.id}, (err, foundArticle)=>{
       res.redirect( '/main' );
         });
     });
+
+    // Update : PUT    '/nomain/:id'
+  app.put( '/nomain/:id' , ( req , res ) => {
+      Nothings.findByIdAndUpdate( req.params.id, req.body , { new : true }, ( err , nothings ) => {
+        if ( err ) { console.log( err ); }
+        res.redirect ( '/nomain' );
+      });
+    });
+
+  // delete not to do
+app.delete('/nomain/:id', (req, res)=>{
+    Nothings.findOneAndRemove({_id: req.params.id}, (err, foundArticle)=>{
+      res.redirect( '/nomain' );
+        });
+    });
+
+
 
 
 // users controller

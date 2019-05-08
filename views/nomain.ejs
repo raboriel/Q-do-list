@@ -21,21 +21,20 @@
                 </form>
               </div>
               <div class="row">
-                <form action="/main" class="col s12" method="post">
+                <form action="/nomain" class="col s12" method="post">
                   <div class="input-field col s12">
                     <input type="text" class="materialize-textarea" name="doing"/>
-                    <label for="textarea1">Things to Do</label>
+                    <label for="textarea1">Things not to Do</label>
                     <button class="btn waves-effect waves-light btn-large" type="submit">ADD Things
                     </button>
                   </div>
                 </form>
               </div>
-              <% for(let i = 0; i < thingz.length; i++) { %>
-                  <form action="/main/<%=thingz[i]._id%>?_method=DELETE" method="POST">
-                    <label>
-                       <input type="checkbox" class="thingscheck"/>
-                       <span><input type="submit" value="<%=thingz[i].doing%>" class="thingz" disabled/></span>
-                    </label>
+              <% for(let i = 0; i < nothings.length; i++) { %>
+                  <form action="/nomain/<%=nothings[i]._id%>?_method=DELETE" method="POST">
+                    <span class="notdoing"><%=nothings[i].doing%></span>&nbsp&nbsp
+                    <a href="/nomain/<%=nothings[i]._id%>/edit" class="nobutton">Edit |</a>
+                    <button type="submit" class="nobutton" >Delete</button>
                   </form><br/>
                 <%} %>
               <% } else { %>
@@ -44,25 +43,6 @@
               <% } %>
           </div>
 
-         <!-- Optional JavaScript -->
-         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-         <script>
-            // checkbox to delete target
-            $('.thingscheck').on("click", function (element) {
-              if($(this).is(':checked')){
-                $(this).next().children().removeAttr('disabled');
-              } else {
-                $(this).next().children().attr('disabled', 'disabled');
-              }
-               var data = $(this).data("id");
-               $.ajax({
-                 type: "POST",
-                 url: "https://qdolist.herokuapp.com/",
-                 data: {},
-                 success: 'Ok'
-                })
-              })
-        </script>
           <div class="footer">Made by Kyungsub Kim</div>
   </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <% include ./partials/head.ejs %>
+  </head>
+  <body>
+    <div class="header"></div>
+      <div class="container">
+        <header>
+          <div class="header">
+          <h5>Not to Do List</h5>
+          </div>
+        </header>
+          <div class="spacearea"></div>
+            <% if(currentUser){ %>
+              <div class="userstatus">
+                <form action="/sessions?_method=DELETE" method="POST">
+                  welcome <%=currentUser.username%>
+                  <input type="submit" value="Log out" class="logout"/>
+                </form>
+              </div>
+              <form class="edit" action="/nomain/<%=nothings.id%>?_method=PUT" method="POST">
+                <label for="doing">Edit thing: </label>
+                <input type="text" name="doing" value="<%=nothings.doing%>">
+                <button type="submit" value="Submit" class="waves-effect waves-light btn">Submit</button>
+              </form>
+              <% } else { %>
+                <a class="waves-effect waves-light btn" href="/users/new">Sign Up</a>
+                <a class="waves-effect waves-light btn" href="/sessions/new">Log In</a>
+              <% } %>
+          </div>
+
+          <div class="footer">Made by Kyungsub Kim</div>
+  </body>
+</html>
